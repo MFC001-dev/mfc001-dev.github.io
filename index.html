@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подписки Happ</title>
+    <title>Подписки</title>
     <style>
-        /* ===== ОБНУЛЕНИЕ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -18,90 +17,46 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0b0b1a;
+            background: #0e0e1a;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* ===== АНИМИРОВАННЫЙ ФОН ===== */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 30% 50%, #1a1040 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 50%, #2d1b69 0%, transparent 60%),
-                        radial-gradient(ellipse at 50% 100%, #1a0a2e 0%, transparent 50%);
-            z-index: 0;
-            animation: bgFloat 15s ease-in-out infinite alternate;
-        }
-
-        @keyframes bgFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-5%, 5%) scale(1.05); }
-        }
-
-        /* ===== КОНТЕЙНЕР ===== */
         .container {
-            position: relative;
-            z-index: 1;
-            background: rgba(26, 26, 46, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 48px 36px 40px;
-            max-width: 440px;
+            background: #18182b;
+            border-radius: 28px;
+            padding: 44px 32px 36px;
+            max-width: 400px;
             width: 100%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px);
+            border: 1px solid #2a2a42;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        @keyframes slideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== ИКОНКА ===== */
         .icon {
-            font-size: 52px;
-            margin-bottom: 12px;
+            font-size: 48px;
+            margin-bottom: 10px;
             display: block;
-            animation: pulse 2.5s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        /* ===== ЗАГОЛОВКИ ===== */
         h1 {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.5);
+            color: #8888aa;
             font-size: 15px;
-            font-weight: 400;
             margin-bottom: 32px;
         }
 
-        /* ===== КНОПКИ ===== */
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
 
         .btn {
@@ -112,133 +67,77 @@
             padding: 18px 24px;
             border-radius: 16px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 17px;
             color: #fff;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .btn:hover::after {
-            opacity: 1;
+            transition: all 0.2s;
+            border: 1px solid transparent;
         }
 
         .btn:active {
-            transform: scale(0.96);
+            transform: scale(0.97);
         }
 
-        /* Кнопка 1 — Белые списки */
         .btn-white {
-            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.3);
+            background: #2d2d50;
+            border-color: #44446a;
         }
         .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(108, 92, 231, 0.45);
+            background: #3a3a62;
+            border-color: #5a5a8a;
         }
 
-        /* Кнопка 2 — Обычный впн */
         .btn-vpn {
-            background: linear-gradient(135deg, #fd79a8 0%, #e17055 100%);
-            box-shadow: 0 4px 20px rgba(225, 112, 85, 0.3);
+            background: #2d1f3a;
+            border-color: #4a2a5a;
         }
         .btn-vpn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(225, 112, 85, 0.45);
+            background: #3d2a4a;
+            border-color: #5a3a6a;
         }
 
-        /* Эмодзи в кнопках */
         .btn .emoji {
-            font-size: 22px;
-            line-height: 1;
+            font-size: 20px;
         }
 
-        .btn .badge {
-            background: rgba(255,255,255,0.15);
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            margin-left: auto;
-        }
-
-        /* ===== ФУТЕР ===== */
         .footer {
             display: flex;
             flex-direction: column;
-            gap: 12px;
             align-items: center;
+            gap: 10px;
         }
 
         .note {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .note span {
-            display: inline-block;
-            animation: blink 2s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            color: #555577;
+            font-size: 14px;
         }
 
         .status {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            color: #555577;
+            font-size: 13px;
         }
 
         .status-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: #00b894;
-            animation: dotPulse 2s ease-in-out infinite;
+            background: #4a8a6a;
         }
 
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
-        }
-
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 480px) {
             .container {
                 padding: 32px 20px 28px;
                 border-radius: 24px;
             }
             h1 {
-                font-size: 24px;
+                font-size: 22px;
             }
             .btn {
                 font-size: 15px;
                 padding: 16px 20px;
-            }
-            .icon {
-                font-size: 44px;
             }
         }
     </style>
@@ -246,33 +145,24 @@
 <body>
 
     <div class="container">
-        <!-- Иконка -->
         <span class="icon">🛡️</span>
-
-        <!-- Заголовок -->
         <h1>Доступные подписки</h1>
         <p class="subtitle">Выберите и активируйте одним нажатием</p>
 
-        <!-- Кнопки -->
         <div class="btn-group">
-            <!-- БЕЛЫЕ СПИСКИ -->
             <a href="happ://crypt5/fzvdXUs9rFLAegnUbJTMZgdX20JMLJ4lp1zeD9FLPZx+NmC3QiqKJ7IdasCKtU7ALWlWyn+kp3+cG04KRnyAndUM9rVU7XFnDYNMJGczeFeIDKze6MeXhvHJNq05vq8pKT5HBuYbx7PdY5+J8PMruK47ylbnq14VLzbJJmFEqIskR9slWppAVmxxiKsNM4ZClXlmgpxDnUNJZs98KudoJO871glfA82tNotw61hYKc8=gjR0gIKFeS7+nbIqLi3yj7EUnkqWWppBO/KFr8jDlGuE0WkL9odUYnYJBB//igV+e7qYrkbeIFvtyzuRiLgJNAzALfwfLxXp8H0hLj4fYly8rCf2PqJNc4zSojY9v2N9YJfukt4rDMmefVWF6uTRZsqVeDGIV+80VFREaRozxGUeJ3MGbECbbu6IvP4L+E8OCcE14EnSUN+t8qDLR19Jy32Rwdb+CYLNgPpxX7jKfokTSMyrMeh4anQFs8uULb8r+Qw5AqZH/4ViIMswM9YlSU2iKLaPz20CcHkzUNmAB9hYvlnAQRdREjGLvLTEJzcEYEcC+6BmvH9oq9bJA9pCueQvSa8YoLY00WFWk5ZgSWQpsv7u6tecYA06JtLe2YsNRy4umUJxuyPCuFYYYEhv7sRW2Oap7qEjKj3OAuV3KCpiaK46JChDEYKzGp2cNHvi+4HXzEXT80Q8wfnOrmsjOHu7gpLGAat1cGVNwszOVOZGgqdZJgLCGNfTBWEbw3p2H2HSbiTV9wCRIQBKr2TJfnjWQ5jwndQzC0WAGtdFVcDl6nCJ8kphN3IdtOKyK7+x5zg0WpCwaX3gBseAreoXDVZifrvhQbPVw/+PpXVXjacGvI9pv6NeNGELRqkGzYSaPe07jdGfEdjppxOgCREqWHo7i+3nkWNqSank4q/Xfo0=ff" class="btn btn-white">
                 <span class="emoji">⬜</span>
                 Белые списки
             </a>
 
-            <!-- ОБЫЧНЫЙ ВПН -->
             <a href="happ://crypt5/fzvdTAj5I1VJgLnFbZjgAYke20EJAv8DdBE65ywUCNIPNT+dxxRoP2Px9DdbrzBoAXAs0zEUBTrmXfUqIyOrrOv7TQwSLUeeJAWtqRc+KQDw/6RhxzqSiFVAO8JAG4RRMwoe2smJ99NgJUwOq2z7r70PapP4RGZANaexLTEyX1H7GP3BxxTgMxYx8ZBA1QdS+H2GKqCR4bGtjqcsa7xHRFDb9JfgluGPqAGA3KtLLkfLIM/aGBjbt3n0XhVriWy2cKRvGIOrjAuNh0vHTKgB9t3v4JoOpGnfmKekXq5b3kgNMO4kVwHjavLNq3ee0V1Y+oMjyg7qIWWMRJKUJV+mCFsfS7rKQbMAl/DXCGUXBs6bddl8/sQXpg8cqm03BjasdIjcvV5nMrjCHAhgQxHw9ztqBTAFMykxyZCk2GtOYkdX4+0xaALt8YQp2iYd7Ed2AG8Rz4AuWxniwZuLNA2POUFNyYfhJ0/6wBRWf0XeCjCTUP0s8ZHhfPL72JemFhocbUx+f1yryaA4wOUxfyvNUohjdf8/l+eSHt8l099EwE3Le7dMfFPhvcUlfLKiRIs3c1RFNsKRNQsABkgdNByxKXSt0UtAUZvvhANj/fELY/vnT+CVMbNL8ibAdh9uGWrP5avdb9r4KD/0qQs7EBQinUb2OA8P8zlQaxLUpieNzkh3BWjk1W8wu1+xJVTdfviaM20BBBIuIfXYvXpsNJAocPFf0nlUvZNHLuYChLeZ9wcWfgnaM08MHsh13qeHjS+QDxqPCw/Wr7lETtrgQ/JnyNYS14H4x3CJKZvAE101Gv+2DLj3S2uYA0/3nmcrw4Q6IugwMoH5QPnqzItqHpOX7EW2Vumh0ZCg8FKT7JzeAO3gWGVYvJ48NniSODDj/hsxRc6Klu2zPucF5riFU/k4r3h5fok=ff" class="btn btn-vpn">
                 <span class="emoji">🔵</span>
                 Обычный впн
             </a>
         </div>
 
-        <!-- Футер -->
         <div class="footer">
-            <p class="note">
-                <span>📱</span> Нажми на кнопку — приложение откроется автоматически
-            </p>
+            <p class="note">📱 Нажми на кнопку — приложение откроется</p>
             <div class="status">
                 <span class="status-dot"></span>
                 Готово к активации
