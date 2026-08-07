@@ -1,73 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="utf-8">
-    <title>Добавить подписки</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подписки Happ</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background: #f5f5f7;
-            color: #1c1c1e;
+            background: #0f0f1a;
+            padding: 20px;
         }
         .container {
-            text-align: center;
-            padding: 2rem;
-            background: white;
+            background: #1a1a2e;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            max-width: 400px;
-        }
-        .button {
-            display: inline-block;
-            margin: 0.5rem;
-            padding: 12px 30px;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .button-white {
-            background: #007aff;
-        }
-        .button-white:hover {
-            background: #005bbf;
-        }
-        .button-black {
-            background: #e74c3c;
-        }
-        .button-black:hover {
-            background: #c0392b;
-        }
-        .note {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #8e8e93;
-        }
-        .subtitle {
-            font-size: 0.9rem;
-            color: #8e8e93;
-            margin-bottom: 1rem;
+            padding: 40px 30px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         h1 {
-            margin-bottom: 0.5rem;
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #8888aa;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: block;
+            padding: 18px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 14px;
+            transition: all 0.2s;
+            color: white;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-white {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-white:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .btn-vpn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .btn-vpn:hover {
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+        }
+        .note {
+            color: #555577;
+            font-size: 13px;
+            margin-top: 20px;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Добавить подписку</h1>
-        <p class="subtitle">Нажмите кнопку, чтобы добавить серверы в Happ</p>
-        <a href="happ://crypt5/fzvdjxVQfceYWfD4TEOaWx4d20cXkl4Ka6rSMjAAhO3ovUx8bshUaIdaZJ26zUBkkNs2A98ZEBRuNE5uEQV+neLzpA/4rrGUZ/XfgcRXkO2zzMMXq6p2Oino82ry8ash2URwZf53G1qPPQXq96fWrp9t3KoZp79uH7Jxb31FRIEbdpFUG/xwNWldhoQ+brSggSsro8DgZWAtXI8TNSHYb6+sKXxZkczYv3e/FhvBcm4=T4lNvI/QUVqS6FtXTUsh3tppGYF1rFn/72syT5iiHB5CSash4+hpNher8xtPWhacI/YNRz96qUqPwVcgLfRrTYZ6fJMFliUsF00SuAbMKx+VT28sCgX+Sst5KexXp4YD30+deDUWEMtFd/5eJZVogwRbKiNb3SNGApFGuKPcAXOv/6oFoWOPHab1DfseyXQ8UAgdElfBedcyYCiNsEUHBZb4j8OdWloD88E0YycEUI2S6aGcBaaAozFnJHlgpP5wuVbelP4bcLXap4NWN72ZHXJ7nDGPtSj33dOEvIyWRL1vtYzHJXenXahOYx4l84wmHca6RrByiSUt0CF1cLCcDrNp9ETynRf+diAFEa+DEysiLNCIpNZvDoXmG7gFNjXR8gUWcQ/ujMwwhRVioTxRUaSPnqVKtwlTQPJG3dg7sDUNww534wLM3/0XTpJ7S3JWyYpmvCeot5EzwX8eXpCwud11CSrMYVkFz9xJtAp2Q0nZzBuSEEe+y/ALkAgiVy0K3NVeoUxB8GKq5WjfzRmYJM8ZBN7E3hrji8T3GLzRerJ4nZsY2BcnKWaZ5hfILUzs2pDFZPhS5iss9EXyM2cr1km3iPZxctC1P9548YZBMOWAFCRpNhPRUpuGU4LyCZq/9ymvHX4ff54m73ZIeCoRsw9NRmQW1AmXEohwvtjcfoY=ff" class="button button-white">Mobile (WL)</a>
-        <a href="happ://crypt5/fzvdXdn8FTWiupg2TInYxDPI200O798YJJDzR3EiraRrcSEhzfItbuj5NDWVOOJTcP/R+STNMAWIAmop8teYCjtSN5irY0rb/Xm18dwbN4NusFlVI2ZZ66YxQ/usdrir1+yD8uEF8RCQw2fe7eIOZ+s86aJJ0vAETYj+7e0jFE52bUiZUTRU6Mn2WxuKmrWrp0qK2ADXY/zZe1qwzIdOGcOx5xStpgKT2JVJ+GYYfbWjyF1lO2il9FsOWNYfD1vBIjhHE3l/JP4FrFEs3SC6rViT+AuBcTGbgHR+JY8npSCL2JRYwRrk5321MlYlpbZsVgvr5TRPtNQ7uMHM0BibCNeQgJPG70mp6AMNM99nLagG0XRiFZ22RyX/JiUg3qkrtQf8wY/x1L6DTfOYJIIi+uZr2P4wfjCclpMsVm/tdsgOfnmejwivFxYCe6pK7iVwmu06zcGK1Sk56+7nKb+QzXmkloVRmcqxf9T4BQk3aQwCmlZ0sLXVJXm5b7B5mR2cF2Nb8TjcumiO6cSe7G7JjdXbqyIJzD2c9BH4+Aj2hPTM84/tLoRUV/Je4PfW/c8T4EZ/d2k2P8iElW6NgCTepwjkui67AlwWaktb1wCDdmRePFGedlCrQmsmHkdlQwoQRpr9P7uIUMVOWujzRoii8tfIRxQzV6+TKt2+OeDZ/w1lWhUhfiP3FGPZ0d7qrKOptNB6osamOwjgf5u5yUlnBrrY2zuw3jOp3PTi3J6xR5GK2O2gk0oadfp9PfN3a/hKIrTwEyJYzVO7xNrDf3EesK7Kt2UuCd6I0sbj4BGUlhq8OsZcbPeAdODFCN8dbBYUfhxOF5WRBLAGlL2HTq6gGS4QDMV/AtYhvo55IQdv4uit/yvnclfdo6P+aCydFc+1AiR8W6EDNX8Hy3BqWOpKjv7Mfok=ff" class="button button-black">Wifi</a>
-        <p class="note">Если приложение не открывается, убедитесь, что Happ установлен.</p>
+        <h1>🛡️ Подписки</h1>
+        <p class="subtitle">Нажмите на кнопку, чтобы добавить в happ</p>
+
+        <!-- БЕЛЫЕ СПИСКИ -->
+        <a href="happ://crypt5/fzvdXUs9rFLAegnUbJTMZgdX20JMLJ4lp1zeD9FLPZx+NmC3QiqKJ7IdasCKtU7ALWlWyn+kp3+cG04KRnyAndUM9rVU7XFnDYNMJGczeFeIDKze6MeXhvHJNq05vq8pKT5HBuYbx7PdY5+J8PMruK47ylbnq14VLzbJJmFEqIskR9slWppAVmxxiKsNM4ZClXlmgpxDnUNJZs98KudoJO871glfA82tNotw61hYKc8=gjR0gIKFeS7+nbIqLi3yj7EUnkqWWppBO/KFr8jDlGuE0WkL9odUYnYJBB//igV+e7qYrkbeIFvtyzuRiLgJNAzALfwfLxXp8H0hLj4fYly8rCf2PqJNc4zSojY9v2N9YJfukt4rDMmefVWF6uTRZsqVeDGIV+80VFREaRozxGUeJ3MGbECbbu6IvP4L+E8OCcE14EnSUN+t8qDLR19Jy32Rwdb+CYLNgPpxX7jKfokTSMyrMeh4anQFs8uULb8r+Qw5AqZH/4ViIMswM9YlSU2iKLaPz20CcHkzUNmAB9hYvlnAQRdREjGLvLTEJzcEYEcC+6BmvH9oq9bJA9pCueQvSa8YoLY00WFWk5ZgSWQpsv7u6tecYA06JtLe2YsNRy4umUJxuyPCuFYYYEhv7sRW2Oap7qEjKj3OAuV3KCpiaK46JChDEYKzGp2cNHvi+4HXzEXT80Q8wfnOrmsjOHu7gpLGAat1cGVNwszOVOZGgqdZJgLCGNfTBWEbw3p2H2HSbiTV9wCRIQBKr2TJfnjWQ5jwndQzC0WAGtdFVcDl6nCJ8kphN3IdtOKyK7+x5zg0WpCwaX3gBseAreoXDVZifrvhQbPVw/+PpXVXjacGvI9pv6NeNGELRqkGzYSaPe07jdGfEdjppxOgCREqWHo7i+3nkWNqSank4q/Xfo0=ff" class="btn btn-white">
+            ⬜ Белые списки
+        </a>
+
+        <!-- ОБЫЧНЫЙ ВПН -->
+        <a href="happ://crypt5/fzvdTAj5I1VJgLnFbZjgAYke20EJAv8DdBE65ywUCNIPNT+dxxRoP2Px9DdbrzBoAXAs0zEUBTrmXfUqIyOrrOv7TQwSLUeeJAWtqRc+KQDw/6RhxzqSiFVAO8JAG4RRMwoe2smJ99NgJUwOq2z7r70PapP4RGZANaexLTEyX1H7GP3BxxTgMxYx8ZBA1QdS+H2GKqCR4bGtjqcsa7xHRFDb9JfgluGPqAGA3KtLLkfLIM/aGBjbt3n0XhVriWy2cKRvGIOrjAuNh0vHTKgB9t3v4JoOpGnfmKekXq5b3kgNMO4kVwHjavLNq3ee0V1Y+oMjyg7qIWWMRJKUJV+mCFsfS7rKQbMAl/DXCGUXBs6bddl8/sQXpg8cqm03BjasdIjcvV5nMrjCHAhgQxHw9ztqBTAFMykxyZCk2GtOYkdX4+0xaALt8YQp2iYd7Ed2AG8Rz4AuWxniwZuLNA2POUFNyYfhJ0/6wBRWf0XeCjCTUP0s8ZHhfPL72JemFhocbUx+f1yryaA4wOUxfyvNUohjdf8/l+eSHt8l099EwE3Le7dMfFPhvcUlfLKiRIs3c1RFNsKRNQsABkgdNByxKXSt0UtAUZvvhANj/fELY/vnT+CVMbNL8ibAdh9uGWrP5avdb9r4KD/0qQs7EBQinUb2OA8P8zlQaxLUpieNzkh3BWjk1W8wu1+xJVTdfviaM20BBBIuIfXYvXpsNJAocPFf0nlUvZNHLuYChLeZ9wcWfgnaM08MHsh13qeHjS+QDxqPCw/Wr7lETtrgQ/JnyNYS14H4x3CJKZvAE101Gv+2DLj3S2uYA0/3nmcrw4Q6IugwMoH5QPnqzItqHpOX7EW2Vumh0ZCg8FKT7JzeAO3gWGVYvJ48NniSODDj/hsxRc6Klu2zPucF5riFU/k4r3h5fok=ff" class="btn btn-vpn">
+            🔵 Обычный впн
+        </a>
+
+        <p class="note">
+            📱 Если приложение не открывается — убедитесь, что Happ установлен
+        </p>
     </div>
 </body>
 </html>
