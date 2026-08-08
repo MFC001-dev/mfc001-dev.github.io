@@ -68,6 +68,74 @@
         padding: 24px;
     }
 
+    /* animated ambient gradient background */
+    .bg-anim {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        animation: hueshift 24s linear infinite;
+    }
+
+    .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        will-change: transform;
+    }
+
+    .blob-1 {
+        width: 440px;
+        height: 440px;
+        top: -14%;
+        left: -14%;
+        background: var(--md-primary-container);
+        opacity: .55;
+        animation: float1 20s ease-in-out infinite;
+    }
+
+    .blob-2 {
+        width: 380px;
+        height: 380px;
+        bottom: -16%;
+        right: -12%;
+        background: var(--md-tertiary-container);
+        opacity: .5;
+        animation: float2 26s ease-in-out infinite;
+    }
+
+    .blob-3 {
+        width: 320px;
+        height: 320px;
+        top: 34%;
+        right: 12%;
+        background: var(--md-primary);
+        opacity: .22;
+        animation: float3 32s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(70px, 90px) scale(1.18); }
+    }
+    @keyframes float2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(-80px, -60px) scale(1.12); }
+    }
+    @keyframes float3 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(-50px, 70px) scale(1.2); }
+        66% { transform: translate(60px, -40px) scale(0.88); }
+    }
+    @keyframes hueshift {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .bg-anim, .blob { animation: none; }
+    }
+
     .sheet {
         width: 100%;
         max-width: 400px;
@@ -76,6 +144,7 @@
         box-shadow: var(--md-elev-1);
         padding: 20px 20px 28px;
         position: relative;
+        z-index: 1;
     }
 
     /* top row: overline label + segmented language switch */
@@ -280,6 +349,12 @@
 </style>
 </head>
 <body>
+
+<div class="bg-anim" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+</div>
 
 <div class="sheet">
     <div class="top-row">
