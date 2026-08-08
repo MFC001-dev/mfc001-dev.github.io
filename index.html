@@ -1,244 +1,393 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pigeon VPN</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pigeon VPN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wght@8..144,400..500&display=swap" rel="stylesheet">
+<style>
+    :root {
+        /* M3 dark color roles (seed: indigo/blue, security-leaning) */
+        --md-primary: #AEC6FF;
+        --md-on-primary: #002E69;
+        --md-primary-container: #1E4696;
+        --md-on-primary-container: #D9E2FF;
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0e0e1a;
-            padding: 20px;
-        }
+        --md-secondary: #C0C6DC;
+        --md-on-secondary: #2A3042;
 
-        .container {
-            background: #18182b;
-            border-radius: 28px;
-            padding: 44px 32px 36px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid #2a2a42;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            position: relative;
-        }
+        --md-tertiary: #E3B9D0;
+        --md-on-tertiary: #46263A;
+        --md-tertiary-container: #5F3E52;
+        --md-on-tertiary-container: #FFD8EA;
 
-        .lang-switch {
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            display: flex;
-            gap: 6px;
-            background: #22223a;
-            padding: 4px;
-            border-radius: 20px;
-            border: 1px solid #3a3a5a;
-        }
+        --md-surface: #121318;
+        --md-surface-dim: #121318;
+        --md-surface-container-lowest: #0d0e13;
+        --md-surface-container-low: #1a1b21;
+        --md-surface-container: #1e1f25;
+        --md-surface-container-high: #292a30;
+        --md-surface-container-highest: #34353b;
 
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: #666688;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.25s;
-            font-family: inherit;
-            letter-spacing: 0.3px;
-        }
+        --md-on-surface: #E4E2E6;
+        --md-on-surface-variant: #C4C6D0;
+        --md-outline: #8E9099;
+        --md-outline-variant: #44474E;
 
-        .lang-btn.active {
-            background: #3d3d66;
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        }
+        --md-shape-xl: 28px;
+        --md-shape-l: 16px;
+        --md-shape-m: 12px;
+        --md-shape-full: 999px;
 
-        .lang-btn:hover:not(.active) {
-            color: #aaaacc;
-        }
+        --md-elev-1: 0 1px 2px rgba(0,0,0,.35), 0 1px 3px 1px rgba(0,0,0,.18);
+        --md-elev-2: 0 1px 2px rgba(0,0,0,.35), 0 2px 6px 2px rgba(0,0,0,.18);
+    }
 
-        .icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-            display: block;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        h1 {
-            color: #fff;
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: -0.3px;
-        }
+    .icon {
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        display: block;
+        flex-shrink: 0;
+    }
 
-        .subtitle {
-            color: #8888aa;
-            font-size: 15px;
-            margin-bottom: 32px;
-        }
 
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 30px;
-        }
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: var(--md-surface);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
 
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px 24px;
-            border-radius: 16px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 17px;
-            color: #fff;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
+    .sheet {
+        width: 100%;
+        max-width: 400px;
+        background: var(--md-surface-container-low);
+        border-radius: var(--md-shape-xl);
+        box-shadow: var(--md-elev-1);
+        padding: 20px 20px 28px;
+        position: relative;
+    }
 
-        .btn:active {
-            transform: scale(0.97);
-        }
+    /* top row: overline label + segmented language switch */
+    .top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+    }
 
-        .btn-white {
-            background: #2d2d50;
-            border-color: #44446a;
-        }
-        .btn-white:hover {
-            background: #3a3a62;
-            border-color: #5a5a8a;
-        }
+    .brand {
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--md-on-surface-variant);
+    }
 
-        .btn-vpn {
-            background: #2d1f3a;
-            border-color: #4a2a5a;
-        }
-        .btn-vpn:hover {
-            background: #3d2a4a;
-            border-color: #5a3a6a;
-        }
+    .segmented {
+        display: flex;
+        border: 1px solid var(--md-outline);
+        border-radius: var(--md-shape-full);
+        overflow: hidden;
+    }
 
-        .btn .emoji {
-            font-size: 20px;
-        }
+    .segment {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: transparent;
+        border: none;
+        color: var(--md-on-surface-variant);
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: .02em;
+        padding: 6px 14px 6px 12px;
+        cursor: pointer;
+        transition: background-color .15s;
+    }
 
-        .note {
-            color: #555577;
-            font-size: 14px;
-        }
+    .segment + .segment { border-left: 1px solid var(--md-outline); }
 
-        .hidden {
-            display: none;
-        }
+    .segment svg { width: 16px; height: 16px; opacity: 0; transform: scale(.6); transition: opacity .15s, transform .15s; }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 32px 20px 28px;
-                border-radius: 24px;
-            }
-            .lang-switch {
-                top: 12px;
-                right: 14px;
-            }
-            .lang-btn {
-                font-size: 12px;
-                padding: 5px 11px;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            .btn {
-                font-size: 15px;
-                padding: 16px 20px;
-            }
-        }
-    </style>
+    .segment.active {
+        background: var(--md-secondary);
+        color: var(--md-on-secondary);
+    }
+    .segment.active svg { opacity: 1; transform: scale(1); }
+
+    .segment:not(.active):hover { background: rgba(196,198,208,.08); }
+
+    /* hero */
+    .avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: var(--md-shape-l);
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+    .avatar svg { width: 26px; height: 26px; }
+
+    h1 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 1.25;
+        color: var(--md-on-surface);
+        margin-bottom: 6px;
+        letter-spacing: 0;
+    }
+
+    .supporting {
+        font-size: 14px;
+        line-height: 1.4;
+        color: var(--md-on-surface-variant);
+        margin-bottom: 22px;
+    }
+
+    /* subscription cards (M3 filled card / list item hybrid) */
+    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+
+    .card {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--md-surface-container-high);
+        border-radius: var(--md-shape-l);
+        padding: 12px 12px 12px 14px;
+        text-decoration: none;
+        transition: background-color .15s;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--md-primary);
+        opacity: 0;
+        transition: opacity .15s;
+        pointer-events: none;
+    }
+    .card:hover::before { opacity: .06; }
+    .card:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        border-radius: var(--md-shape-m);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .card-icon svg { width: 22px; height: 22px; }
+
+    .card-white .card-icon { background: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
+    .card-vpn .card-icon { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+
+    .card-text { flex: 1; min-width: 0; }
+
+    .card-overline {
+        display: block;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--md-on-surface-variant);
+        margin-bottom: 3px;
+    }
+
+    .card-title {
+        display: block;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--md-on-surface);
+    }
+
+    .card-trailing {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--md-on-surface-variant);
+        transition: transform .15s;
+    }
+    .card:hover .card-trailing { transform: translateX(2px); color: var(--md-on-surface); }
+    .card-trailing svg { width: 20px; height: 20px; }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,.28);
+        transform: scale(0);
+        animation: ripple .5s ease-out forwards;
+        pointer-events: none;
+    }
+    @keyframes ripple {
+        to { transform: scale(2.6); opacity: 0; }
+    }
+
+    /* assist chip note */
+    .chip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 7px 16px 7px 12px;
+        border: 1px solid var(--md-outline-variant);
+        border-radius: var(--md-shape-full);
+        color: var(--md-on-surface-variant);
+        font-size: 12.5px;
+        font-weight: 500;
+    }
+    .chip svg { width: 16px; height: 16px; }
+
+    .hidden { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card, .segment, .card-trailing, .ripple { transition: none; animation: none; }
+    }
+
+    @media (max-width: 400px) {
+        h1 { font-size: 23px; }
+        .card-title { font-size: 15px; }
+    }
+</style>
 </head>
 <body>
 
-    <div class="container" id="app">
-        <div class="lang-switch">
-            <button class="lang-btn active" data-lang="ru">RU</button>
-            <button class="lang-btn" data-lang="en">EN</button>
-        </div>
-
-        <div id="ru">
-            <span class="icon">🛡️</span>
-            <h1>Доступные подписки</h1>
-            <p class="subtitle">Выберите и активируйте одним нажатием</p>
-
-            <div class="btn-group">
-                <a href="happ://crypt5/fzvdkM8QMHh8zXsbelilryny202Of54FrWgU7ZDn9NL3WgcV73ekkmdERl6yVL7unwJjHoyfYaBwqB7HY+1tA/0vxa9G7SHve4fEfdlzB4mWG68CEVBFLQeX0LWcv9ZI0dq8bVRJlId+c4NW3hv7C/DV496TS6wc5BgRkAzBz0QUnIxBowht2rbvIwplE7xHhv2sGylWzJaN/2XZRztvdrxqFfCyinE3SaFUU8+V8LE=KZ3nOvbunXF4cFb9B+I5A7rW95aCDcGrgC1ABji51Dg53tluqca3Ql7mS2XSuvyJVeDyx2moFc7M4E+l73oBSliKkAei2KWVP//2r/bZB7qVkj1kToRWt0nwVLcE2uKmdkxa0Evofi2Q432RMfac8zg9EWIcTX7D/Drhu3Q2UBYVYJOoBqSMoar5nzDrvW0ZUV+USB6/26Rve+iGvMJEkXj64ed+eVJb0yPBQyQMUOzSV9mX87BxI9kMmeHaPyQ2BA41Ufd9iAqJkvhUmQKXZohn00Zngk7sJhRVxGc+msT4dJqP6DiQe6ImE/4DNYQ5tiU43p24scoxrX7q8bVROQ5a8oE987QauhDmQJb4juLVFMUVGVVifbkGq7OM9SldF3RfSRBY8rWSvyx/umocz8MVwsF2d36nOhYYtZoYMEPHg7fENXSpc/lkOrhhTPxutgWBIzGdBfic99Qdvz9msONPYdX6rVPTWrLd9neVVDJn4+tCOijB+s/Us8JMYYrrPwENjLiU6qOdvL812MTvJSAowRCGwJuqGuSt7GgDcMuUZa6sdvA4nTQEVuBbP9LRxcvHTGIOWoPtcOcvFQOPh9rJRS52KicmlduCG0Pk0EHbgOTaQGH6rDuJ6m9ZbfL6EIlFzZuD8gESBoyim+8B9hgsLvFsSvpHRFKnPskofoo=ff" class="btn btn-white">
-                    <span class="emoji">⬜</span>
-                    Белые списки
-                </a>
-
-                <a href="happ://crypt5/fzvdTw42NDBCptl00dQWFxiQ200OqU8W8EOfblNjeLinbMx1cvxOX4Q288Vl6FNchlqC9T2jzmhei9DoLZuHq2DY37p8FWgNr9GaEPsGEHQDVzMOQMtHKhpGFrnL2v6GuCBHm9bCD+z6akwH07LnjDIFo2wNKtUbDZwN6wNK3JbXO6XcIxmIOb+ChWUvQyyMNxbkkCERfscRdlUC3STlgiLWXKP01vs/4DyHcjr6YX82pWgkLNDwWk5EaLNhs3ZGILvdRNM4H593CFZwWTmkUa1KbioDCXHTibwVxDSbPQ6imHZrftIWo0Ld5CYaaWKN+yvAI1gfADFZ5+/4Qd58EUfBfP1duexFLCJys8MHQfQrFDo4OneSoilihgxC46KaP1IHEdP2CrKQAGeBA4YJ82w2BWLmC4tGtPsEvojQuHuuI+vTbM8jVF61zPCCaiv5a8r0tO4fISWEYIfABG57p8dZsJp+kYcn4gfs/jl3McOUnPgmwPXlmP1NdOZ6Bu9gaFzMSTtWc2NAMlqZhQ6NzaAtF3z0Ug9TR4iXsHpeg3Mmm0iQjHVH+x4pKqDzsorgZOR2n1ENG2Ras/aJhn1NcW/t7oD22DqLtEuiSS6XSbJBqVYhmHdDetvQvMbMliBd/Gl7eY4sX490Z7DBnSOrewJKeBbfimT3KUUyP9wklVaFE55lpzu2V7/tvYaRunQHfjZsVyWYhyWYBcx4Q47SJHvjXd5uFU1E3sVkAeNYBCgsBVlitHRR2mqt5/glHYb4493nkIGXAMen9ASBy1dih6h969rWg7k94X0AjbUqMOYyAXanxWJQsFJ0MHegURg5klFPnzFqbUS11cnrl6EUqlb6Z1u4nGfaN2ef7dAy4sMzBCR3Jf07s4rVINteaiXGMWrBY5sQ8w69CGHuuxDYd5zWfo0=ff" class="btn btn-vpn">
-                    <span class="emoji">🔵</span>
-                    Обычный впн
-                </a>
-            </div>
-
-            <p class="note">📱 Нажми на кнопку — Happ откроется автоматически</p>
-        </div>
-
-        <div id="en" class="hidden">
-            <span class="icon">🛡️</span>
-            <h1>Available subscriptions</h1>
-            <p class="subtitle">Select and activate with one tap</p>
-
-            <div class="btn-group">
-                <a href="happ://crypt5/fzvdkM8QMHh8zXsbelilryny202Of54FrWgU7ZDn9NL3WgcV73ekkmdERl6yVL7unwJjHoyfYaBwqB7HY+1tA/0vxa9G7SHve4fEfdlzB4mWG68CEVBFLQeX0LWcv9ZI0dq8bVRJlId+c4NW3hv7C/DV496TS6wc5BgRkAzBz0QUnIxBowht2rbvIwplE7xHhv2sGylWzJaN/2XZRztvdrxqFfCyinE3SaFUU8+V8LE=KZ3nOvbunXF4cFb9B+I5A7rW95aCDcGrgC1ABji51Dg53tluqca3Ql7mS2XSuvyJVeDyx2moFc7M4E+l73oBSliKkAei2KWVP//2r/bZB7qVkj1kToRWt0nwVLcE2uKmdkxa0Evofi2Q432RMfac8zg9EWIcTX7D/Drhu3Q2UBYVYJOoBqSMoar5nzDrvW0ZUV+USB6/26Rve+iGvMJEkXj64ed+eVJb0yPBQyQMUOzSV9mX87BxI9kMmeHaPyQ2BA41Ufd9iAqJkvhUmQKXZohn00Zngk7sJhRVxGc+msT4dJqP6DiQe6ImE/4DNYQ5tiU43p24scoxrX7q8bVROQ5a8oE987QauhDmQJb4juLVFMUVGVVifbkGq7OM9SldF3RfSRBY8rWSvyx/umocz8MVwsF2d36nOhYYtZoYMEPHg7fENXSpc/lkOrhhTPxutgWBIzGdBfic99Qdvz9msONPYdX6rVPTWrLd9neVVDJn4+tCOijB+s/Us8JMYYrrPwENjLiU6qOdvL812MTvJSAowRCGwJuqGuSt7GgDcMuUZa6sdvA4nTQEVuBbP9LRxcvHTGIOWoPtcOcvFQOPh9rJRS52KicmlduCG0Pk0EHbgOTaQGH6rDuJ6m9ZbfL6EIlFzZuD8gESBoyim+8B9hgsLvFsSvpHRFKnPskofoo=ff" class="btn btn-white">
-                    <span class="emoji">⬜</span>
-                    White lists
-                </a>
-
-                <a href="happ://crypt5/fzvdTw42NDBCptl00dQWFxiQ200OqU8W8EOfblNjeLinbMx1cvxOX4Q288Vl6FNchlqC9T2jzmhei9DoLZuHq2DY37p8FWgNr9GaEPsGEHQDVzMOQMtHKhpGFrnL2v6GuCBHm9bCD+z6akwH07LnjDIFo2wNKtUbDZwN6wNK3JbXO6XcIxmIOb+ChWUvQyyMNxbkkCERfscRdlUC3STlgiLWXKP01vs/4DyHcjr6YX82pWgkLNDwWk5EaLNhs3ZGILvdRNM4H593CFZwWTmkUa1KbioDCXHTibwVxDSbPQ6imHZrftIWo0Ld5CYaaWKN+yvAI1gfADFZ5+/4Qd58EUfBfP1duexFLCJys8MHQfQrFDo4OneSoilihgxC46KaP1IHEdP2CrKQAGeBA4YJ82w2BWLmC4tGtPsEvojQuHuuI+vTbM8jVF61zPCCaiv5a8r0tO4fISWEYIfABG57p8dZsJp+kYcn4gfs/jl3McOUnPgmwPXlmP1NdOZ6Bu9gaFzMSTtWc2NAMlqZhQ6NzaAtF3z0Ug9TR4iXsHpeg3Mmm0iQjHVH+x4pKqDzsorgZOR2n1ENG2Ras/aJhn1NcW/t7oD22DqLtEuiSS6XSbJBqVYhmHdDetvQvMbMliBd/Gl7eY4sX490Z7DBnSOrewJKeBbfimT3KUUyP9wklVaFE55lpzu2V7/tvYaRunQHfjZsVyWYhyWYBcx4Q47SJHvjXd5uFU1E3sVkAeNYBCgsBVlitHRR2mqt5/glHYb4493nkIGXAMen9ASBy1dih6h969rWg7k94X0AjbUqMOYyAXanxWJQsFJ0MHegURg5klFPnzFqbUS11cnrl6EUqlb6Z1u4nGfaN2ef7dAy4sMzBCR3Jf07s4rVINteaiXGMWrBY5sQ8w69CGHuuxDYd5zWfo0=ff" class="btn btn-vpn">
-                    <span class="emoji">🔵</span>
-                    Regular VPN
-                </a>
-            </div>
-
-            <p class="note">📱 Tap the button — Happ will open automatically</p>
+<div class="sheet">
+    <div class="top-row">
+        <span class="brand">Pigeon VPN</span>
+        <div class="segmented">
+            <button class="segment active" data-lang="ru">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 12l5 5L20 7"/></svg>RU
+            </button>
+            <button class="segment" data-lang="en">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 12l5 5L20 7"/></svg>EN
+            </button>
         </div>
     </div>
 
-    <script>
-        const langBtns = document.querySelectorAll('.lang-btn');
-        const ruBlock = document.getElementById('ru');
-        const enBlock = document.getElementById('en');
+    <div id="ru">
+        <div class="avatar"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h1>Выберите маршрут</h1>
+        <p class="supporting">Нажмите на карточку — Happ откроется автоматически.</p>
 
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                langBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+        <div class="options">
+            <a class="card card-white" href="happ://crypt5/fzvdkM8QMHh8zXsbelilryny202Of54FrWgU7ZDn9NL3WgcV73ekkmdERl6yVL7unwJjHoyfYaBwqB7HY+1tA/0vxa9G7SHve4fEfdlzB4mWG68CEVBFLQeX0LWcv9ZI0dq8bVRJlId+c4NW3hv7C/DV496TS6wc5BgRkAzBz0QUnIxBowht2rbvIwplE7xHhv2sGylWzJaN/2XZRztvdrxqFfCyinE3SaFUU8+V8LE=KZ3nOvbunXF4cFb9B+I5A7rW95aCDcGrgC1ABji51Dg53tluqca3Ql7mS2XSuvyJVeDyx2moFc7M4E+l73oBSliKkAei2KWVP//2r/bZB7qVkj1kToRWt0nwVLcE2uKmdkxa0Evofi2Q432RMfac8zg9EWIcTX7D/Drhu3Q2UBYVYJOoBqSMoar5nzDrvW0ZUV+USB6/26Rve+iGvMJEkXj64ed+eVJb0yPBQyQMUOzSV9mX87BxI9kMmeHaPyQ2BA41Ufd9iAqJkvhUmQKXZohn00Zngk7sJhRVxGc+msT4dJqP6DiQe6ImE/4DNYQ5tiU43p24scoxrX7q8bVROQ5a8oE987QauhDmQJb4juLVFMUVGVVifbkGq7OM9SldF3RfSRBY8rWSvyx/umocz8MVwsF2d36nOhYYtZoYMEPHg7fENXSpc/lkOrhhTPxutgWBIzGdBfic99Qdvz9msONPYdX6rVPTWrLd9neVVDJn4+tCOijB+s/Us8JMYYrrPwENjLiU6qOdvL812MTvJSAowRCGwJuqGuSt7GgDcMuUZa6sdvA4nTQEVuBbP9LRxcvHTGIOWoPtcOcvFQOPh9rJRS52KicmlduCG0Pk0EHbgOTaQGH6rDuJ6m9ZbfL6EIlFzZuD8gESBoyim+8B9hgsLvFsSvpHRFKnPskofoo=ff">
+                <span class="card-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></span>
+                <span class="card-text">
+                    <span class="card-overline">Маршрут · Whitelist</span>
+                    <span class="card-title">Белые списки</span>
+                </span>
+                <span class="card-trailing"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
 
-                const lang = this.dataset.lang;
-                if (lang === 'ru') {
-                    ruBlock.classList.remove('hidden');
-                    enBlock.classList.add('hidden');
-                } else {
-                    ruBlock.classList.add('hidden');
-                    enBlock.classList.remove('hidden');
-                }
-            });
+            <a class="card card-vpn" href="happ://crypt5/fzvdTw42NDBCptl00dQWFxiQ200OqU8W8EOfblNjeLinbMx1cvxOX4Q288Vl6FNchlqC9T2jzmhei9DoLZuHq2DY37p8FWgNr9GaEPsGEHQDVzMOQMtHKhpGFrnL2v6GuCBHm9bCD+z6akwH07LnjDIFo2wNKtUbDZwN6wNK3JbXO6XcIxmIOb+ChWUvQyyMNxbkkCERfscRdlUC3STlgiLWXKP01vs/4DyHcjr6YX82pWgkLNDwWk5EaLNhs3ZGILvdRNM4H593CFZwWTmkUa1KbioDCXHTibwVxDSbPQ6imHZrftIWo0Ld5CYaaWKN+yvAI1gfADFZ5+/4Qd58EUfBfP1duexFLCJys8MHQfQrFDo4OneSoilihgxC46KaP1IHEdP2CrKQAGeBA4YJ82w2BWLmC4tGtPsEvojQuHuuI+vTbM8jVF61zPCCaiv5a8r0tO4fISWEYIfABG57p8dZsJp+kYcn4gfs/jl3McOUnPgmwPXlmP1NdOZ6Bu9gaFzMSTtWc2NAMlqZhQ6NzaAtF3z0Ug9TR4iXsHpeg3Mmm0iQjHVH+x4pKqDzsorgZOR2n1ENG2Ras/aJhn1NcW/t7oD22DqLtEuiSS6XSbJBqVYhmHdDetvQvMbMliBd/Gl7eY4sX490Z7DBnSOrewJKeBbfimT3KUUyP9wklVaFE55lpzu2V7/tvYaRunQHfjZsVyWYhyWYBcx4Q47SJHvjXd5uFU1E3sVkAeNYBCgsBVlitHRR2mqt5/glHYb4493nkIGXAMen9ASBy1dih6h969rWg7k94X0AjbUqMOYyAXanxWJQsFJ0MHegURg5klFPnzFqbUS11cnrl6EUqlb6Z1u4nGfaN2ef7dAy4sMzBCR3Jf07s4rVINteaiXGMWrBY5sQ8w69CGHuuxDYd5zWfo0=ff">
+                <span class="card-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <span class="card-text">
+                    <span class="card-overline">Маршрут · Standard</span>
+                    <span class="card-title">Обычный VPN</span>
+                </span>
+                <span class="card-trailing"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+        </div>
+
+        <div class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Открывается прямо в Happ</div>
+    </div>
+
+    <div id="en" class="hidden">
+        <div class="avatar"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h1>Choose a route</h1>
+        <p class="supporting">Tap a card — Happ opens on its own.</p>
+
+        <div class="options">
+            <a class="card card-white" href="happ://crypt5/fzvdkM8QMHh8zXsbelilryny202Of54FrWgU7ZDn9NL3WgcV73ekkmdERl6yVL7unwJjHoyfYaBwqB7HY+1tA/0vxa9G7SHve4fEfdlzB4mWG68CEVBFLQeX0LWcv9ZI0dq8bVRJlId+c4NW3hv7C/DV496TS6wc5BgRkAzBz0QUnIxBowht2rbvIwplE7xHhv2sGylWzJaN/2XZRztvdrxqFfCyinE3SaFUU8+V8LE=KZ3nOvbunXF4cFb9B+I5A7rW95aCDcGrgC1ABji51Dg53tluqca3Ql7mS2XSuvyJVeDyx2moFc7M4E+l73oBSliKkAei2KWVP//2r/bZB7qVkj1kToRWt0nwVLcE2uKmdkxa0Evofi2Q432RMfac8zg9EWIcTX7D/Drhu3Q2UBYVYJOoBqSMoar5nzDrvW0ZUV+USB6/26Rve+iGvMJEkXj64ed+eVJb0yPBQyQMUOzSV9mX87BxI9kMmeHaPyQ2BA41Ufd9iAqJkvhUmQKXZohn00Zngk7sJhRVxGc+msT4dJqP6DiQe6ImE/4DNYQ5tiU43p24scoxrX7q8bVROQ5a8oE987QauhDmQJb4juLVFMUVGVVifbkGq7OM9SldF3RfSRBY8rWSvyx/umocz8MVwsF2d36nOhYYtZoYMEPHg7fENXSpc/lkOrhhTPxutgWBIzGdBfic99Qdvz9msONPYdX6rVPTWrLd9neVVDJn4+tCOijB+s/Us8JMYYrrPwENjLiU6qOdvL812MTvJSAowRCGwJuqGuSt7GgDcMuUZa6sdvA4nTQEVuBbP9LRxcvHTGIOWoPtcOcvFQOPh9rJRS52KicmlduCG0Pk0EHbgOTaQGH6rDuJ6m9ZbfL6EIlFzZuD8gESBoyim+8B9hgsLvFsSvpHRFKnPskofoo=ff">
+                <span class="card-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></span>
+                <span class="card-text">
+                    <span class="card-overline">Route · Whitelist</span>
+                    <span class="card-title">White list</span>
+                </span>
+                <span class="card-trailing"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="card card-vpn" href="happ://crypt5/fzvdTw42NDBCptl00dQWFxiQ200OqU8W8EOfblNjeLinbMx1cvxOX4Q288Vl6FNchlqC9T2jzmhei9DoLZuHq2DY37p8FWgNr9GaEPsGEHQDVzMOQMtHKhpGFrnL2v6GuCBHm9bCD+z6akwH07LnjDIFo2wNKtUbDZwN6wNK3JbXO6XcIxmIOb+ChWUvQyyMNxbkkCERfscRdlUC3STlgiLWXKP01vs/4DyHcjr6YX82pWgkLNDwWk5EaLNhs3ZGILvdRNM4H593CFZwWTmkUa1KbioDCXHTibwVxDSbPQ6imHZrftIWo0Ld5CYaaWKN+yvAI1gfADFZ5+/4Qd58EUfBfP1duexFLCJys8MHQfQrFDo4OneSoilihgxC46KaP1IHEdP2CrKQAGeBA4YJ82w2BWLmC4tGtPsEvojQuHuuI+vTbM8jVF61zPCCaiv5a8r0tO4fISWEYIfABG57p8dZsJp+kYcn4gfs/jl3McOUnPgmwPXlmP1NdOZ6Bu9gaFzMSTtWc2NAMlqZhQ6NzaAtF3z0Ug9TR4iXsHpeg3Mmm0iQjHVH+x4pKqDzsorgZOR2n1ENG2Ras/aJhn1NcW/t7oD22DqLtEuiSS6XSbJBqVYhmHdDetvQvMbMliBd/Gl7eY4sX490Z7DBnSOrewJKeBbfimT3KUUyP9wklVaFE55lpzu2V7/tvYaRunQHfjZsVyWYhyWYBcx4Q47SJHvjXd5uFU1E3sVkAeNYBCgsBVlitHRR2mqt5/glHYb4493nkIGXAMen9ASBy1dih6h969rWg7k94X0AjbUqMOYyAXanxWJQsFJ0MHegURg5klFPnzFqbUS11cnrl6EUqlb6Z1u4nGfaN2ef7dAy4sMzBCR3Jf07s4rVINteaiXGMWrBY5sQ8w69CGHuuxDYd5zWfo0=ff">
+                <span class="card-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <span class="card-text">
+                    <span class="card-overline">Route · Standard</span>
+                    <span class="card-title">Regular VPN</span>
+                </span>
+                <span class="card-trailing"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+        </div>
+
+        <div class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Opens straight into Happ</div>
+    </div>
+</div>
+
+<script>
+    const segments = document.querySelectorAll('.segment');
+    const ruBlock = document.getElementById('ru');
+    const enBlock = document.getElementById('en');
+
+    segments.forEach(seg => {
+        seg.addEventListener('click', function () {
+            segments.forEach(s => s.classList.remove('active'));
+            this.classList.add('active');
+            const lang = this.dataset.lang;
+            if (lang === 'ru') {
+                ruBlock.classList.remove('hidden');
+                enBlock.classList.add('hidden');
+                document.documentElement.lang = 'ru';
+            } else {
+                ruBlock.classList.add('hidden');
+                enBlock.classList.remove('hidden');
+                document.documentElement.lang = 'en';
+            }
         });
-    </script>
+    });
+
+    // M3-style ripple on cards and chip
+    document.querySelectorAll('.card').forEach(el => {
+        el.addEventListener('click', function (e) {
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height) * 1.4;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 500);
+        });
+    });
+</script>
 
 </body>
 </html>
