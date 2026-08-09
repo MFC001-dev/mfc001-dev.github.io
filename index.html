@@ -136,6 +136,20 @@
         .bg-anim, .blob { animation: none; }
     }
 
+    /* soft light that follows the pointer */
+    .cursor-glow {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 30%),
+            rgba(174, 198, 255, .10), transparent 60%);
+    }
+
+    @media (pointer: coarse) {
+        .cursor-glow { display: none; }
+    }
+
     .sheet {
         width: 100%;
         max-width: 400px;
@@ -186,8 +200,10 @@
         letter-spacing: .02em;
         padding: 6px 14px 6px 12px;
         cursor: pointer;
-        transition: background-color .15s;
+        transition: background-color .2s, transform .15s;
     }
+
+    .segment:active { transform: scale(.94); }
 
     .segment + .segment { border-left: 1px solid var(--md-outline); }
 
@@ -245,7 +261,20 @@
         border-radius: var(--md-shape-l);
         padding: 12px 12px 12px 14px;
         text-decoration: none;
-        transition: background-color .15s;
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+        transition: transform .3s cubic-bezier(.2,.8,.2,1),
+                    box-shadow .3s cubic-bezier(.2,.8,.2,1),
+                    background-color .2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--md-elev-2);
+    }
+
+    .card:active {
+        transform: translateY(-1px) scale(.98);
+        transition-duration: .12s;
     }
 
     .card::before {
@@ -254,7 +283,7 @@
         inset: 0;
         background: var(--md-primary);
         opacity: 0;
-        transition: opacity .15s;
+        transition: opacity .25s;
         pointer-events: none;
     }
     .card:hover::before { opacity: .06; }
@@ -268,8 +297,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: transform .3s cubic-bezier(.2,.8,.2,1);
     }
     .card-icon svg { width: 22px; height: 22px; }
+
+    .card:hover .card-icon { transform: scale(1.08) rotate(-4deg); }
+    .card:active .card-icon { transform: scale(.96) rotate(0deg); }
 
     .card-white .card-icon { background: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
     .card-vpn .card-icon { background: var(--md-primary-container); color: var(--md-on-primary-container); }
@@ -302,9 +335,10 @@
         align-items: center;
         justify-content: center;
         color: var(--md-on-surface-variant);
-        transition: transform .15s;
+        transition: transform .3s cubic-bezier(.2,.8,.2,1), background-color .2s, color .2s;
     }
-    .card:hover .card-trailing { transform: translateX(2px); color: var(--md-on-surface); }
+    .card:hover .card-trailing { transform: translateX(4px); color: var(--md-on-surface); background: rgba(255,255,255,.06); }
+    .card:active .card-trailing { transform: translateX(6px); }
     .card-trailing svg { width: 20px; height: 20px; }
 
     .ripple {
@@ -355,6 +389,7 @@
     <span class="blob blob-2"></span>
     <span class="blob blob-3"></span>
 </div>
+<div class="cursor-glow" aria-hidden="true"></div>
 
 <div class="sheet">
     <div class="top-row">
@@ -427,6 +462,21 @@
 </div>
 
 <script>
+    // cursor-follow glow
+    let glowX = window.innerWidth / 2, glowY = window.innerHeight / 3, ticking = false;
+    window.addEventListener('pointermove', (e) => {
+        glowX = e.clientX;
+        glowY = e.clientY;
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                document.documentElement.style.setProperty('--mx', glowX + 'px');
+                document.documentElement.style.setProperty('--my', glowY + 'px');
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
     const segments = document.querySelectorAll('.segment');
     const ruBlock = document.getElementById('ru');
     const enBlock = document.getElementById('en');
