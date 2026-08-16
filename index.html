@@ -370,10 +370,60 @@
     }
     .chip svg { width: 16px; height: 16px; }
 
+    /* mirrors — secondary, low-emphasis alternate links */
+    .mirrors {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--md-outline-variant);
+    }
+
+    .mirrors-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--md-on-surface-variant);
+        opacity: .7;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .mirror-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .mirror-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: var(--md-shape-m);
+        text-decoration: none;
+        color: var(--md-on-surface-variant);
+        font-size: 13px;
+        font-weight: 500;
+        transition: background-color .2s, color .2s;
+    }
+
+    .mirror-link:hover {
+        background: var(--md-surface-container-high);
+        color: var(--md-on-surface);
+    }
+
+    .mirror-link:active { transform: scale(.98); }
+
+    .mirror-link svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .8; }
+
+    .mirror-link span { flex: 1; }
+
+    .mirror-link .mirror-arrow { width: 14px; height: 14px; opacity: .6; }
+
     .hidden { display: none; }
 
     @media (prefers-reduced-motion: reduce) {
-        .card, .segment, .card-trailing, .ripple { transition: none; animation: none; }
+        .card, .segment, .card-trailing, .ripple, .mirror-link { transition: none; animation: none; }
     }
 
     @media (max-width: 400px) {
@@ -430,6 +480,22 @@
         </div>
 
         <div class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Открывается прямо в Happ</div>
+
+        <div class="mirrors">
+            <p class="mirrors-label">Зеркала</p>
+            <div class="mirror-list">
+                <a class="mirror-link" href="happ://crypt5/fzvdv6vMDxyPMoJUWBqC1WZ120BBCW0ue873F/jCJwwHv9/txyLt4H/hhvtT95dXKsoNgh6AUcxUCUZc9gWF451ehqk+/Hmt8sWPKSDlmnxHRoI70A3Pp1hoK+uh/AfXc0q0kq/aKlh1CumIZJwTeU2FhgUajPoKeXA7le3FBIiZMEkjmW/j1Q+48wemnXpL5761v2FRpuaS0CKraBRyEwRrHqp39nbPogh1Nl==smHsxGWrDI47+NpLtsVBW7ttFQ199BZWdPzk+3qjbFRUXl8cJI4iTOAKtZeazBCDlUQkB8W2OpS2N8DWuF19J/o5HzYVPdg6djJEjLnpfV/dvKwgleVLWjLWpDADUlwACA1U7PoH/OnhBKwX2RXERT9NQIMDT8PHTEmTdXPQlQ22Kr3vdo3P8jXjY2YDY0i5sbIsdiXd80y+D/nMFWzNL0jLxNbmF8w2oB4r62TFvLtv//7LKPvn2ehJFZZkrpcv3WyvvcECeOn6M/G4yVF0YSheEjyNBYVNmOGSB2zRR3mAolu/tsKWHlG6cxlmng6CbD0d+oHp9tn2sKiZhqVmzOZrO3zijulVTq7hri3Ahu3PLJTjTCjIb85sCvc5IJUTJ0BJVJ8XACfYUR313hSGk8g2P+Wkte6cR+7QYCZnewjwYzIoINESRTOA/W0Yf7HHdwl4MnA4rzhHR8NsmcgfQlT23zXt9ktcqItF+KeE7Bs5PjL3EOPgeJgOYh2S9Sdj8wZoX04aG3nVQoNGffhQI10wta7LPreDtlFt5h3mfAbtZntcPRX7er0XXlCizyZR8lG39f63xh7koxg0I6ridkxH6j0wbSsRCCIWGNMk1EO5eHdprHFj8dd68DcLWHNRPN3MOfs9Occq2NpcWEZoFKjbcGbzFC98NGu+AVPGfoU=ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+                    <span>Белые списки — зеркало</span>
+                    <svg class="mirror-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a class="mirror-link" href="happ://crypt5/fzvdi1GOMpu03mD03tId9Pwn23sDU42OyAHLeYaecEjrFlbVGink8LTA/uSMv5IfbfG/sXlhiMUB/pa7jpQfHKQN0Cdx0W2naVJ3eTJah2ee2VraJ9oN0cH3HCciy+rjkQT96OWMoibTRWOxuS1tR6KMqJqajMk3LNK5jknDJU8GG0NjFevA28XUMozWhpqiGRwZCZFjqlusT171xTqKhTsn2xHQjdskQ9RgVE5s7G1F5pnvXj7XIGnZ+ZmTeQGwRA4TWm==1ScUOZdO4mUjIheIKhGGEbLnWhT2zElsGiW2/44RjFlPInqgC2fHF5OqzMC8czyMXT/6Ipu/Z0vegiYGN9D8NVHDiQuIUzyNIJZXwaeKfXX8nH6mk9eZGShzCPSTBvG65/2lh/ozB9tdOoFOuQXN5COaPP9PsT1SJ/oMedHBdRddccgUrDfyiX6fqDinTDYM5caaZ7hjhB/Qp6BAnRbhXDRN0Mf+8NMp7BJG+SU8rmfHXWCh/bXZRJaVz7lUy0baqJPNd9SXbnukjsnE3Au1F8kxU7ES8qpdnz71mo6t/u/ijxetGbwM2sz1T7MSUMkhpl6ESmvYPCq9Zf2F054ykb72xobVoZM/+XKvT4dhbKLmXQdblhlrGsvalzm2NBWpZW6KIwQydblTyKPeR6c81H//cLpAhqMvsv5uoQPnIy/70ks8rCIhionHjvejg/qupUpLuEx1efDHox+m6A7eT47yJatGimD7nAGFGm5VwCMukFf4H1NEE2LXC7AW7V4FgkRx+5kMvJdxfmvTYWdBC7X02PR6VEJYXa5ckDghR40gktZDPEjOryZZeR22gA24XsaiMiIRsIPPS1VuLuHCUz7ukPx4Hy9RGCwhO7zL/HsmkIdHm7XU0dH81hE0EVgwpGW3oqjOBeefWzigH+bnvBnGNQLfMfP/duIdVW9ZfoE=ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+                    <span>Чёрные списки — зеркало</span>
+                    <svg class="mirror-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
     </div>
 
     <div id="en" class="hidden">
@@ -458,6 +524,22 @@
         </div>
 
         <div class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Opens straight into Happ</div>
+
+        <div class="mirrors">
+            <p class="mirrors-label">Mirrors</p>
+            <div class="mirror-list">
+                <a class="mirror-link" href="happ://crypt5/fzvdv6vMDxyPMoJUWBqC1WZ120BBCW0ue873F/jCJwwHv9/txyLt4H/hhvtT95dXKsoNgh6AUcxUCUZc9gWF451ehqk+/Hmt8sWPKSDlmnxHRoI70A3Pp1hoK+uh/AfXc0q0kq/aKlh1CumIZJwTeU2FhgUajPoKeXA7le3FBIiZMEkjmW/j1Q+48wemnXpL5761v2FRpuaS0CKraBRyEwRrHqp39nbPogh1Nl==smHsxGWrDI47+NpLtsVBW7ttFQ199BZWdPzk+3qjbFRUXl8cJI4iTOAKtZeazBCDlUQkB8W2OpS2N8DWuF19J/o5HzYVPdg6djJEjLnpfV/dvKwgleVLWjLWpDADUlwACA1U7PoH/OnhBKwX2RXERT9NQIMDT8PHTEmTdXPQlQ22Kr3vdo3P8jXjY2YDY0i5sbIsdiXd80y+D/nMFWzNL0jLxNbmF8w2oB4r62TFvLtv//7LKPvn2ehJFZZkrpcv3WyvvcECeOn6M/G4yVF0YSheEjyNBYVNmOGSB2zRR3mAolu/tsKWHlG6cxlmng6CbD0d+oHp9tn2sKiZhqVmzOZrO3zijulVTq7hri3Ahu3PLJTjTCjIb85sCvc5IJUTJ0BJVJ8XACfYUR313hSGk8g2P+Wkte6cR+7QYCZnewjwYzIoINESRTOA/W0Yf7HHdwl4MnA4rzhHR8NsmcgfQlT23zXt9ktcqItF+KeE7Bs5PjL3EOPgeJgOYh2S9Sdj8wZoX04aG3nVQoNGffhQI10wta7LPreDtlFt5h3mfAbtZntcPRX7er0XXlCizyZR8lG39f63xh7koxg0I6ridkxH6j0wbSsRCCIWGNMk1EO5eHdprHFj8dd68DcLWHNRPN3MOfs9Occq2NpcWEZoFKjbcGbzFC98NGu+AVPGfoU=ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+                    <span>White list — mirror</span>
+                    <svg class="mirror-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a class="mirror-link" href="happ://crypt5/fzvdi1GOMpu03mD03tId9Pwn23sDU42OyAHLeYaecEjrFlbVGink8LTA/uSMv5IfbfG/sXlhiMUB/pa7jpQfHKQN0Cdx0W2naVJ3eTJah2ee2VraJ9oN0cH3HCciy+rjkQT96OWMoibTRWOxuS1tR6KMqJqajMk3LNK5jknDJU8GG0NjFevA28XUMozWhpqiGRwZCZFjqlusT171xTqKhTsn2xHQjdskQ9RgVE5s7G1F5pnvXj7XIGnZ+ZmTeQGwRA4TWm==1ScUOZdO4mUjIheIKhGGEbLnWhT2zElsGiW2/44RjFlPInqgC2fHF5OqzMC8czyMXT/6Ipu/Z0vegiYGN9D8NVHDiQuIUzyNIJZXwaeKfXX8nH6mk9eZGShzCPSTBvG65/2lh/ozB9tdOoFOuQXN5COaPP9PsT1SJ/oMedHBdRddccgUrDfyiX6fqDinTDYM5caaZ7hjhB/Qp6BAnRbhXDRN0Mf+8NMp7BJG+SU8rmfHXWCh/bXZRJaVz7lUy0baqJPNd9SXbnukjsnE3Au1F8kxU7ES8qpdnz71mo6t/u/ijxetGbwM2sz1T7MSUMkhpl6ESmvYPCq9Zf2F054ykb72xobVoZM/+XKvT4dhbKLmXQdblhlrGsvalzm2NBWpZW6KIwQydblTyKPeR6c81H//cLpAhqMvsv5uoQPnIy/70ks8rCIhionHjvejg/qupUpLuEx1efDHox+m6A7eT47yJatGimD7nAGFGm5VwCMukFf4H1NEE2LXC7AW7V4FgkRx+5kMvJdxfmvTYWdBC7X02PR6VEJYXa5ckDghR40gktZDPEjOryZZeR22gA24XsaiMiIRsIPPS1VuLuHCUz7ukPx4Hy9RGCwhO7zL/HsmkIdHm7XU0dH81hE0EVgwpGW3oqjOBeefWzigH+bnvBnGNQLfMfP/duIdVW9ZfoE=ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+                    <span>Black list — mirror</span>
+                    <svg class="mirror-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
