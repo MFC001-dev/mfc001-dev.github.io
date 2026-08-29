@@ -31,7 +31,15 @@ def encrypt(raw_url: str) -> str:
     req = urllib.request.Request(
         API_URL,
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) "
+                           "Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "application/json, text/plain, */*",
+            "Origin": "https://crypto.happ.su",
+            "Referer": "https://crypto.happ.su/",
+        },
         method="POST",
     )
     try:
@@ -50,8 +58,6 @@ def encrypt(raw_url: str) -> str:
 
 
 def replace_href_for(html: str, raw_url: str, new_link: str) -> tuple[str, int]:
-    # Matches: href="ANYTHING" ... data-sub="raw_url"
-    # and rewrites only the href value, leaving data-sub untouched.
     pattern = re.compile(
         r'href="[^"]*"(\s+data-sub="' + re.escape(raw_url) + r'")'
     )
@@ -94,8 +100,6 @@ def main() -> int:
 
     if errors:
         print(f"\n{len(errors)} URL(s) failed to encrypt — their old links were left in place.", file=sys.stderr)
-        # Don't fail the whole workflow over one bad URL; the old (still
-        # possibly valid) link stays in the file rather than breaking it.
         return 0
 
     return 0
