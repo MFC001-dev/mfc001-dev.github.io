@@ -1,0 +1,33 @@
+name: Refresh Happ crypt5 links
+
+on:
+  schedule:
+    # every day at 03:00 UTC — adjust as needed
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Regenerate crypt5 links
+        run: python3 scripts/refresh_happ_links.py index.html
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "chore: refresh Happ crypt5 links"
+          git push
