@@ -353,6 +353,10 @@
         to { transform: scale(2.6); opacity: 0; }
     }
 
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
     /* assist chip note */
     .chip {
         display: flex;
@@ -579,6 +583,13 @@
             }
         });
     });
+
+    // NOTE: the href on .js-happ-add links is kept in sync with a fresh
+    // happ://crypt5/... link by a scheduled GitHub Action (see
+    // scripts/refresh_happ_links.py). The data-sub attribute always holds
+    // the raw source URL so the Action can regenerate the link on every run.
+    // No client-side JS is needed here anymore — the browser just follows
+    // the href like a normal link.
 
     // M3-style ripple on cards and chip
     document.querySelectorAll('.card').forEach(el => {
